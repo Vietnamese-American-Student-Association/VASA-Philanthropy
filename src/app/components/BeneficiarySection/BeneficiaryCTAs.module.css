@@ -1,0 +1,15 @@
+.ctas { display: flex; flex-direction: column; gap: 5rem; align-items: center; margin-top: 1rem; }
+.button {
+  background: #F5CB5C;
+  border: none;
+  padding: 1rem 1.5rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  color: #5B413A;
+  width: 100%;
+  max-width: 240px;
+}
+@media (min-width: 480px) {
+  .ctas { flex-direction: row; justify-content: center; }
+}
