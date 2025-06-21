@@ -1,5 +1,5 @@
 import React from 'react';
-import OfficerCard, { Officer } from './officerCard';
+import OfficerCard, { Officer } from './OfficerCard';
 
 const executiveBoard: Officer[] = [
   { name: 'Madeline Quach', position: 'President', image: '/images/madeline.png' },

@@ -3,8 +3,8 @@
 import React, { useState } from "react";
 import Header from "../components/header";
 import Footer from "../components/footer";
-import BoardToggle from "../components/boardToggle";
-import OfficersBoard from "../components/officersBoard";
+import BoardToggle from "./components/BoardToggle";
+import OfficersBoard from "./components/OfficersBoard";
 
 const OfficersPage: React.FC = () => {
   const [activeBoard, setActiveBoard] = useState<"executive" | "general">("executive");
