@@ -1,5 +1,6 @@
 import React from 'react';
 import { FaInstagram, FaFacebook, FaDiscord } from 'react-icons/fa';
+import Image from 'next/image';
 
 const Footer: React.FC = () => {
   return (
@@ -24,7 +25,7 @@ const Footer: React.FC = () => {
           <h2>CONTACT US</h2>
           <div className="footer-email">vasaproject407@gmail.com</div>
           <div>
-            <img src="../images/VASALogo.png" alt="VASA Logo" className="vasa-logo" />
+            <Image src="/images/VASALogo.png" alt="VASA Logo" width={100} height={100} className="vasa-logo" />
           </div>
         </div>
       </div>
