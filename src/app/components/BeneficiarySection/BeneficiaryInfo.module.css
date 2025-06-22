@@ -1,6 +1,0 @@
-.info { display: flex; flex-direction: column; gap: 3rem; align-items: center; }
-.text { max-width: 600px; }
-@media (min-width: 768px) {
-  .info { flex-direction: row; text-align: left; justify-content: center; gap: 10rem; }
-  .text { max-width: 700px; }
-}
