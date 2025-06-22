@@ -1,0 +1,270 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap');
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+
+* {
+  margin: 0;
+}
+
+html, body {
+  height: 100%;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  color: #171717;
+  background: #E8EDDF;
+  font-family: 'Rubik';
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+
+#page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+
+.content-wrapper {
+  flex: 1;
+  max-width: 1200px;      
+  margin: 0 auto;         
+  padding-left: 2vw;      
+  padding-right: 2vw;     
+  width: 100%;
+}
+
+
+main {
+  flex: 1; 
+  display: flex;
+  flex-direction: column;
+  max-width: 1200px;      
+  margin: 7vw auto;         
+  padding-left: 2vw;      
+  padding-right: 2vw;     
+  width: 100%;
+}
+
+header {
+  background: #F6C452;
+  color: #171717;
+  padding: 2vw 0;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+header h1 {
+  color: #171717;
+  font-size: 2vw;
+  font-weight: bold;
+  white-space: nowrap;
+  letter-spacing: -0.01vw;
+  margin-right: 7vw;
+  line-height: 1.2;
+}
+
+header nav {
+  display: flex;
+  gap: 0.5vw;
+  align-items: center;
+}
+
+header nav a {
+  color: #171717;
+  font-size: 1vw;
+  font-weight: normal;
+  text-decoration: none;
+  transition: text-decoration 0.2s;
+  line-height: 1.5;
+}
+
+header nav a:hover {
+  text-decoration: underline;
+}
+
+header nav span {
+  margin: 0.25vw;
+  color: #171717;
+}
+
+footer {
+  background: #F6C452;
+  color: #171717;
+  padding: 2vw 1vw;
+  text-align: center;
+  width: 100%;
+  flex-shrink: 0;
+  margin-top: auto;
+}
+
+.officer-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2vw;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1200px;
+  justify-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+
+@media (min-width: 640px) {
+  .officer-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+
+@media (min-width: 768px) {
+  .officer-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .officer-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.officer-card {
+  margin: 0 auto;
+}
+
+
+.officer-card h3 {
+  color: #171717;
+  font-weight: bold;
+  font-size: 1.125vw;
+  margin-bottom: 0.25vw;
+}
+
+.officer-card p {
+  color: #555;
+  font-size: 1vw;
+}
+
+.board-header {
+  font-family: 'Rubik', sans-serif;
+  font-size: 1.75vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 3vw;
+  margin-bottom: 3vw;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 2.37vw;
+  padding-right: 2vw;
+}
+
+.board-toggle-container {
+  display: flex;
+}
+
+.board-toggle-btn {
+  padding: 0.75vw 1.5vw;
+  border-radius: 0.375rem;
+  font-weight: bold;
+  background: transparent;
+  color: #171717;
+  margin-right: .65vw;
+  transition: background 0.2s, color 0.2s;
+  border: 4px solid #F6C452;
+  cursor: pointer;
+}
+
+.board-toggle-btn.active {
+  background: #F6C452;
+  color: #171717;
+}
+
+@media (min-width: 1200px) {
+  .content-wrapper,
+  main {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+.icon-text {
+  display: flex;
+  align-items: center;
+  gap: 1vw;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: center;      
+  align-items: flex-start;
+  gap: 6vw;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2vw 0;
+}
+
+.footer-socials,
+.footer-contact {
+  flex: 1 1 0;
+  min-width: 220px;
+  text-align: left;
+  
+}
+
+.footer-socials h2,
+.footer-contact h2 {
+  font-weight: bold;
+  font-size: 2vw;
+  margin-bottom: 1vw;
+}
+
+.footer-email {
+  font-size: 1.2vw;
+  margin-bottom: 1vw;
+}
+
+.vasa-logo {
+  width: 6vw;
+  height: auto;
+  margin-top: 1vw;
+}
+
+.footer-icon{
+  display: flex;
+  align-items: center;
+  font-size: 2vw;
+}
+
+.footer-social-row {
+  margin-bottom: 1.5vw;
+}
