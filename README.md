@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# VASA Philanthropy Website
 
-## Getting Started
+A Next.js website for the UCF Vietnamese American Student Association (VASA) highlighting their philanthropy initiatives, officers, and organizational information.
 
-First, run the development server:
+## Project Overview
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+This website serves as the online presence for VASA at UCF, with a focus on:
+
+- Showcasing philanthropy efforts and history
+- Introducing board members and officers
+- Sharing organizational information
+- Providing ways to donate and contribute
+
+## Features
+
+- **Responsive Design**: Optimized for both desktop and mobile devices
+- **Modern UI**: Clean design with the VASA branding colors (yellow/gold theme)
+- **Multiple Sections**:
+  - Officers page with toggleable Executive and General Board views
+  - Philanthropy page highlighting initiatives and history
+  - About page with organization information
+  - Donation options
+
+## 🛠️ Technology Stack
+
+- **Framework**: Next.js 15.3.3
+- **Language**: TypeScript
+- **Styling**: CSS Modules and TailwindCSS
+- **UI Components**: React 19.0.0
+- **Icons**: react-icons
+
+## 🏗️ Project Structure
+
+```
+app/
+├── components/            # Shared components
+├── globals.css           # Global styles
+├── officers/             # Officers section
+│   ├── components/       # Officer-specific components
+│   │   ├── BoardToggle.tsx
+│   │   ├── OfficerCard.tsx
+│   │   └── OfficersBoard.tsx
+│   ├── layout.tsx
+│   └── page.tsx
+├── philanthropy/         # Philanthropy section
+│   ├── components/       # Philanthropy-specific components
+│   │   ├── BeneficiarySection/
+│   │   ├── ContributionGallery.tsx
+│   │   ├── HeroBanner.tsx
+│   │   ├── HistorySection.tsx
+│   │   └── IntroSection.tsx
+│   └── page.tsx
+└── layout.tsx            # Root layout
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📝 Component Organization
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The project follows a feature-based organization:
+- **Shared components** in `/app/components`
+- **Feature-specific components** in their respective feature folders
+- **CSS Modules** for component-specific styling
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Contributors
 
-## Learn More
+- VASA UCF Web Development Team
+- Contact: vasaproject407@gmail.com
 
-To learn more about Next.js, take a look at the following resources:
+## Social Media
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Instagram: @VASAUCF
+- Facebook: Vasa
+- Discord: VASA UCF
