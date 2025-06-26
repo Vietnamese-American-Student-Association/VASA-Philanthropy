@@ -7,3 +7,9 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 .env
+.DS_Store
+.vscode/
+.idea/
+.vscode-test/
+*.sublime-workspace
+*.sublime-project       
