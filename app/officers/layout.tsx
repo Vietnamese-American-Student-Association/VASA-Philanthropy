@@ -22,8 +22,8 @@ export default function OfficersLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>{children}</body>
-    </html>
+    <div>
+      <div className={`${geistSans.variable} ${geistMono.variable}`}>{children}</div>
+    </div>
   )
 }
