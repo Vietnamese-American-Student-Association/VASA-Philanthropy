@@ -8,7 +8,7 @@ const Header: React.FC = () => {
           UCF VIETNAMESE AMERICAN STUDENT ASSOCIATION
         </h1>
         <nav>
-          <Link href="/about">ABOUT US</Link>
+          <Link href="/">ABOUT US</Link>
           <span> | </span>
           <Link href="/officers">OFFICERS</Link>
           <span> | </span>

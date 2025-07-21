@@ -1,5 +1,6 @@
-import React from 'react';
-import OfficerCard, { Officer } from './OfficerCard';
+"use client";
+import React from "react";
+import OfficerCard, { Officer } from "./OfficerCard";
 
 const executiveBoard: Officer[] = [
   { name: 'Madeline Quach', position: 'President', image: '/images/madeline.png' },
@@ -25,22 +26,20 @@ const generalBoard: Officer[] = [
   { name: 'Devin Chin', position: 'Media Chair', image: '/images/jinju.png' },
 ];
 
-type OfficersBoardProps = {
+type MobileOfficersBoardProps = {
   type: 'eboard' | 'gboard';
 };
 
-const OfficersBoard: React.FC<OfficersBoardProps> = ({ type }) => {
+const MobileOfficersBoard: React.FC<MobileOfficersBoardProps> = ({ type }) => {
   const boardMembers = type === 'eboard' ? executiveBoard : generalBoard;
 
   return (
-    <div>
-      <div className="officer-grid">
-        {boardMembers.map((officer, index) => (
-          <OfficerCard key={index} officer={officer} />
-        ))}
-      </div>
+    <div className="mobile-officer-grid">
+      {boardMembers.map((officer, index) => (
+        <OfficerCard key={index} officer={officer} />
+      ))}
     </div>
   );
 };
 
-export default OfficersBoard;
+export default MobileOfficersBoard;

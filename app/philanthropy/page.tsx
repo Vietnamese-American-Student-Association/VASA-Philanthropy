@@ -6,12 +6,12 @@ import ContributionGallery from './components/ContributionGallery'
 
 export default function Home() {
   return (
-    <>
+    <div>
       <HeroBanner />
       <IntroSection />
       <HistorySection />
       <BeneficiarySection />
       <ContributionGallery />
-    </>
+    </div>
   )
 }

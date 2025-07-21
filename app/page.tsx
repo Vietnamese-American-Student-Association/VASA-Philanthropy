@@ -12,9 +12,9 @@ import Cultural from "../public/images/cultural.png";
 import Philanthrophy from "../public/images/philanthropy.png";
 import Media from "../public/images/media.png";
 import Decorations from "../public/images/decorations.png";
-import WalkingBo from "../public/images/WalkingBo.gif";
+import WalkingBo from "../public/images/WalkingBo2.gif";
 
-const gifWidth = 100; // width of your gif in px
+const gifWidth = 150; // width of your gif in px
 
 function WalkingGif() {
   const [direction, setDirection] = useState(1);
@@ -44,7 +44,7 @@ function WalkingGif() {
   }, [direction]);
 
   return (
-    <div style={{ width: 350, height: 80, position: "absolute", top: 110, left: "19%", transform: "translateX(-90%)" }}>
+    <div style={{ width: 350, height: 80, position: "absolute", top: 110, left: "27%", transform: "translateX(-110%)" }}>
       <img
         src={WalkingBo.src}
         alt="Walking Bo"
@@ -55,7 +55,6 @@ function WalkingGif() {
           width: gifWidth,
           height: "auto",
           zIndex: 2,
-          transform: direction === 1 ? "scaleX(-1)" : "scaleX(1)",
           transition: "transform 0.2s",
           pointerEvents: "none",
         }}
