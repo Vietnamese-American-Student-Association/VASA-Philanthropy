@@ -12,4 +12,5 @@ pnpm-debug.log*
 .idea/
 .vscode-test/
 *.sublime-workspace
-*.sublime-project       
+*.sublime-project
+.DS_Store

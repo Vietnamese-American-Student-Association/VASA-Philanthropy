@@ -5,13 +5,13 @@ const executiveBoard: Officer[] = [
   { name: 'Madeline Quach', position: 'President', image: '/images/madeline.png' },
   { name: 'Huy Phan', position: 'External Vice President', image: '/images/huy.png' },
   { name: 'Jinju Nam', position: 'Internal Vice President', image: '/images/jinju.png' },
-  { name: 'Dorothy Ta', position: 'Secretary', image: '/images/dort.png' },
+  { name: 'Dorothy Ta', position: 'Secretary', image: '/images/dorothy.png' },
   { name: 'Jason Lai', position: 'Events Coordinator', image: '/images/jinju.png' },
-  { name: 'Stella Nguyen', position: 'Treasurer', image: '/images/jinju.png' },
+  { name: 'Stella Nguyen', position: 'Treasurer', image: '/images/stella.png' },
 ];
 
 const generalBoard: Officer[] = [
-  { name: 'Jeff Li', position: 'Philanthropy Chair', image: '/images/jaz.png' },
+  { name: 'Jeff Li', position: 'Philanthropy Chair', image: '/images/jeff.png' },
   { name: 'Alex Tran', position: 'Skit Chair', image: '/images/dort.png' },
   { name: 'Natalie Escobar', position: 'Skit Chair', image: '/images/jinju.png' },
   { name: 'Soleil Pham', position: 'Decorations Chair', image: '/images/huy.png' },
