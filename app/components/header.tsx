@@ -14,7 +14,7 @@ const Header: React.FC = () => {
           <span> | </span>
           <Link href="/philanthropy">PHILANTHROPY</Link>
           <span> | </span>
-          <Link href="/donate">DONATE</Link>
+          <Link href="/donation">DONATE</Link>
         </nav>
     </header>
   );

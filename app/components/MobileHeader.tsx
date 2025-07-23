@@ -21,12 +21,12 @@ const MobileHeader: React.FC = () => {
           {open ? <FaTimes size={28} color="black" /> : <FaBars size={28} color="black" />}
         </button>
       </div>
-      
+
         <nav className={`mobile-dropdown-nav ${open ? 'open' : ''}`}>
             <Link href="/" onClick={() => setOpen(false)}>ABOUT US</Link>
             <Link href="/officers" onClick={() => setOpen(false)}>OFFICERS</Link>
             <Link href="/philanthropy" onClick={() => setOpen(false)}>PHILANTHROPY</Link>
-            <Link href="/donate" onClick={() => setOpen(false)}>DONATE</Link>
+            <Link href="/donation" onClick={() => setOpen(false)}>DONATE</Link>
         </nav>
 
     </header>
