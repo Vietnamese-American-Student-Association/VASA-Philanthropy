@@ -1,0 +1,186 @@
+.donation-page {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Background image & dark overlay */
+.donation-bg {
+    object-fit: cover;
+    z-index: -2;
+}
+
+.donation-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+    z-index: -1;
+}
+
+/* Center-/scale the card */
+.donation-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 1rem;
+}
+
+.donation-card {
+    background: #e8eddf;
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+    max-width: 600px;
+    width: 100%;
+    padding: 2rem;
+}
+
+/* Headline & copy */
+.donation-card h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: #171717;
+    text-transform: uppercase;
+}
+
+.donation-copy {
+    font-size: 0.9rem;
+    line-height: 1.4;
+    margin-bottom: 1.5rem;
+}
+
+/* Amount selector */
+.amount-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+}
+
+.amount-button {
+    padding: 0.55rem 1.05rem;
+    border: none;
+    border-radius: 10px;
+    background: #ffc94b;
+    font-weight: 700;
+    font-size: 1rem;
+    color: #1b1b1b;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.amount-button:hover {
+    opacity: 0.9;
+}
+
+.amount-button.selected {
+    background: #ffb836;
+    color: #ffffff;
+}
+
+.amount-custom-group {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.amount-custom-input {
+    width: 70px;
+    padding: 0.5rem;
+    border: 2px solid #d0d0d0;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+/* Form */
+.donation-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem 0.5rem;
+    margin-bottom: 1.25rem;
+}
+
+.donation-form label {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.8rem;
+    color: #171717;
+}
+
+.donation-form input[type=\"text\"],
+.donation-form input[type=\"number\"] {
+    padding: 0.5rem;
+    border: 1px solid #c4c4c4;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+.hide-name {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Summary & payment buttons */
+.bottom-section {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.donation-summary {
+    font-weight: 700;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+
+.donation-summary span {
+    float: right;
+}
+
+.payment-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 30%;
+}
+
+.pay-btn {
+    width: 100%;
+    padding: 0.6rem;
+    border-radius: 6px;
+    border: none;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    color: #fff;
+}
+
+.pay-btn.stripe {
+    background: #6772e5;
+}
+
+.pay-btn.venmo {
+    background: #008cdd;
+}
+
+.pay-btn.cashapp {
+    background: #28c101;
+}
+
+/* Small-screen tweaks */
+@media (max-width: 500px) {
+    .donation-card {
+        padding: 1.5rem 1rem;
+    }
+
+    .donation-form {
+        grid-template-columns: 1fr;
+    }
+}
