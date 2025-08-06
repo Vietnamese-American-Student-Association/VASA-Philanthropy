@@ -8,13 +8,18 @@ const Footer: React.FC = () => {
       <div className="footer-content">
         <div className="footer-socials">
           <h2>STAY UPDATED ON OUR SOCIALS!</h2>
-          <div className="footer-social-row icon-text">
+            <a
+            href="https://www.instagram.com/vasaucf?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+            target="_blank"
+            rel="noopener noreferrer"
+            className="footer-social-row icon-text"
+            >
             <span className="footer-icon"><FaInstagram /></span>
             <span>@VASAUCF</span>
-          </div>
+            </a>
           <div className="footer-social-row icon-text">
             <span className="footer-icon"><FaFacebook /></span>
-            <span>Va Sa</span>
+            <span>VASA UCF</span>
           </div>
           <div className="footer-social-row icon-text">
             <span className="footer-icon"><FaDiscord /></span>

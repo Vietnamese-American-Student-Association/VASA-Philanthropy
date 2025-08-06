@@ -13,6 +13,9 @@ import Philanthrophy from "../public/images/philanthropy.png";
 import Media from "../public/images/media.png";
 import Decorations from "../public/images/decorations.png";
 import WalkingBo from "../public/images/WalkingBo2.gif";
+import useIsMobile from "./hooks/useIsMobile";
+import MobileHeader from "./components/MobileHeader";
+import MobileFooter from "./components/MobileFooter";
 
 const gifWidth = 150; // width of your gif in px
 
@@ -64,9 +67,11 @@ function WalkingGif() {
 }
 
 export default function Landing() {
+  const isMobile = useIsMobile();
+
   return (
     <div>
-      <Header />
+      {isMobile ? <MobileHeader /> : <Header />}
       <div className="landing-hero">
         <Image
           src={Group_image}
@@ -238,7 +243,7 @@ export default function Landing() {
           </div>
         </div>
       </div>
-      <Footer />
+      {isMobile ? <MobileFooter /> : <Footer />}
     </div>
   );
 }
