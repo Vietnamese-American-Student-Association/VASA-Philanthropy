@@ -4,6 +4,9 @@ import Image from "next/image";
 import Header from "../components/header"; // adjust to your path
 import Footer from "../components/footer";
 import "./donationPage.css";
+import useIsMobile from "../hooks/useIsMobile";
+import MobileHeader from "../components/MobileHeader";
+import MobileFooter from "../components/MobileFooter";
 
 const AMOUNTS = [50, 25, 10, 5];
 
@@ -11,6 +14,7 @@ const formatUSD = (n: number) =>
   n.toLocaleString("en-US", { style: "currency", currency: "USD" });
 
 export default function DonationPage() {
+  const isMobile = useIsMobile();
   const [selected, setSelected] = useState<number | "custom" | null>(null);
   const [customAmount, setCustomAmount] = useState("");
 
@@ -19,7 +23,7 @@ export default function DonationPage() {
 
   return (
     <div className="donation-page">
-      <Header />
+      {isMobile ? <MobileHeader /> : <Header />}
 
       {/* Background image */}
       <Image
@@ -119,7 +123,7 @@ export default function DonationPage() {
         </section>
       </main>
 
-      <Footer />
+      {isMobile ? <MobileFooter /> : <Footer />}
     </div>
   );
 }

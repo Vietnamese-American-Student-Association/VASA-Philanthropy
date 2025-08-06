@@ -1,18 +1,18 @@
+"use client";
 import './globals.css'
 import Header from '../components/header'
 import Footer from '../components/footer'
-
-export const metadata = {
-  title: 'VASA Philanthropy',
-  description: 'Collective Philanthropy Project — UCF VASA',
-}
+import useIsMobile from '../hooks/useIsMobile'
+import MobileFooter from '../components/MobileFooter'
+import MobileHeader from '../components/MobileHeader'
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const IsMobile = useIsMobile();
   return (
     <div>
-        <Header/>
+        {IsMobile? <MobileHeader/>:<Header/>}
         {children}
-        <Footer/>
+        {IsMobile? <MobileFooter/>:<Footer/>}
      </div>
   )
 }
