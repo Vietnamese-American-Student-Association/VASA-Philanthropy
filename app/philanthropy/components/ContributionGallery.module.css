@@ -1,25 +1,83 @@
-.gallery { padding: 2rem 1rem; width: 100vw; padding: 0; margin: 0; }
-.gallery h2 { text-align: center; margin-bottom: 1.5rem; 
-color: #5B413A;}
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap');
 
+/* ===== root gallery layout ===== */
+.gallery {
+  width: 100vw;
+  padding: 0;
+  margin: 0;
+}
+
+.gallery h2 {
+  text-align: center;
+  margin: 2rem 0 1.5rem;
+  color: #5b413a;
+  font-family: 'Rubik', sans-serif;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+/* ===== individual slide ===== */
 .slide {
   position: relative;
   width: 100vw;
-  margin-left: calc((100% - 100vw) / 2);
   height: 40vh;
-  margin-bottom: 0rem;
   overflow: hidden;
+  margin-left: calc((100% - 100vw) / 2); /* full-bleed */
 }
-.image { object-fit: cover; }
-.overlay h2{
-  position: absolute; inset: 0;
-  display: flex; justify-content: center; align-items: center;
-  color: #E5EBDA;
+
+.image {
+  object-fit: cover;
+}
+
+/* ===== overlay container ===== */
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none; /* let image handle hover */
+}
+
+/* title */
+.overlay h2 {
+  color: #e5ebda;
   -webkit-text-stroke: 1px black;
   text-shadow:
     -1px -1px 0 black,
      1px -1px 0 black,
     -1px  1px 0 black,
      1px  1px 0 black;
-  font-size: clamp(3rem, 3vw, 2rem);
+  font-size: clamp(2rem, 3vw, 3rem);
+  margin-bottom: 0.5rem;
+  transition: transform 0.3s;
+}
+
+/* description (hidden until hover) */
+.slideDesc {
+  color: #ffffff;
+  font-family: 'Rubik', sans-serif;
+  font-size: 1rem;
+  max-width: 600px;
+  padding: 0 3rem;
+  text-align: center;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+/* ===== hover effects ===== */
+.slide:hover .overlay h2 {
+  transform: translateY(-1.5rem);
+}
+
+.slide:hover .slideDesc {
+  opacity: 1;
+  transform: translateY(0);
+}
+.slide:hover .image {
+  filter: brightness(0.6);
+  transition: filter 0.3s;
 }
