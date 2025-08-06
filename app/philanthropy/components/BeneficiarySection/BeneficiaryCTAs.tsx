@@ -4,8 +4,8 @@ export default function BeneficiaryCTAs() {
   return (
     <div className={styles.ctas}>
       {/* Later, wrap <button> in <Link href="..."> or add onClick */}
-      <button className={styles.button}>BENEFICIARY WEBSITE</button>
-      <button className={styles.button}>DONATE</button>
+      <a href="https://www.vnah-hev.org/" className={styles.button}>BENEFICIARY WEBSITE</a>
+      <a href="/donation" className={styles.button}>DONATE</a>
     </div>
   )
 }
