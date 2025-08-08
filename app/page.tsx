@@ -12,25 +12,38 @@ import Cultural from "../public/images/cultural.png";
 import Philanthrophy from "../public/images/philanthropy.png";
 import Media from "../public/images/media.png";
 import Decorations from "../public/images/decorations.png";
-import WalkingBo from "../public/images/WalkingBo2.gif";
 import useIsMobile from "./hooks/useIsMobile";
 import MobileHeader from "./components/MobileHeader";
 import MobileFooter from "./components/MobileFooter";
 
-const gifWidth = 150; // width of your gif in px
+const RIGHT_GIF = "/images/WalkingBo2.gif"; // exact case
+const LEFT_GIF  = "/images/WalkingBo.gif";  // exact case
+const gifWidthRight = 150;
+const gifWidthLeft  = 105; // bigger asset
 
 function WalkingGif() {
-  const [direction, setDirection] = useState(1);
+  const [direction, setDirection] = useState<1 | -1>(1);
   const [position, setPosition] = useState(0);
   const requestRef = useRef<number | null>(null);
 
+  // Preload both GIFs to prevent flashing when swapping
   useEffect(() => {
-    setPosition(-1); // Start at left edge of the donation box container
+    if (typeof window !== "undefined") {
+      const img1 = new window.Image();
+      const img2 = new window.Image();
+      img1.src = RIGHT_GIF;
+      img2.src = LEFT_GIF;
+    }
+  }, []);
+
+  useEffect(() => {
+    const speed = 0.7;      // pixels per frame (tweak)
+    const max = 300;      // track width (tweak)
+    let raf: number;
 
     const animate = () => {
       setPosition((prev) => {
-        const max = 350; // Adjust this value to fit the width of your donation box
-        let next = prev + direction * 0.5; // Adjust speed here (0.5px per frame)
+        let next = prev + direction * speed;
         if (next > max) {
           setDirection(-1);
           next = max;
@@ -40,25 +53,29 @@ function WalkingGif() {
         }
         return next;
       });
-      requestRef.current = requestAnimationFrame(animate);
+      raf = requestAnimationFrame(animate);
     };
-    requestRef.current = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(requestRef.current!);
+
+    raf = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(raf);
   }, [direction]);
 
+  const src = direction === 1 ? RIGHT_GIF : LEFT_GIF;
+  const width = direction === 1 ? gifWidthRight : gifWidthLeft;
+
   return (
-    <div style={{ width: 350, height: 80, position: "absolute", top: 110, left: "27%", transform: "translateX(-110%)" }}>
+    <div style={{ width: 300, height: 80, position: "absolute", top: 106, left: "29%", transform: "translateX(-110%)" }}>
       <img
-        src={WalkingBo.src}
+        src={src}
         alt="Walking Bo"
+        onError={(e) => console.warn("GIF failed to load:", (e.target as HTMLImageElement).src)}
         style={{
           position: "absolute",
           left: position,
           bottom: 0,
-          width: gifWidth,
+          width,
           height: "auto",
           zIndex: 2,
-          transition: "transform 0.2s",
           pointerEvents: "none",
         }}
       />
@@ -78,12 +95,17 @@ export default function Landing() {
           alt="Group"
           fill
           className="landing-bg-image"
-          style={{ objectFit: "cover", zIndex: -1 }}
+          sizes="100vw"
+          priority
         />
-        <div className="landing-donation-overlay" style={{ position: "relative" }}>
-          <WalkingGif />
-          <DonationBox />
-        </div>
+        {
+          isMobile ? null : (
+            <div className="landing-donation-overlay" style={{ position: "relative" }}>
+              <WalkingGif />
+              <DonationBox />
+            </div>
+          )
+        }
       </div>
       {/* Logo between hero and content */}
       <div className="landing-logo-container">
@@ -108,6 +130,7 @@ export default function Landing() {
               sharing Vietnamese–American culture through a spirit of diversity,
               inclusiveness, and lifelong friendships.
             </p>
+            <br />
             <p className="section-paragraph">
               Whether you're Vietnamese or not, we welcome all who are
               interested in learning about and embracing Vietnamese culture.
@@ -115,6 +138,7 @@ export default function Landing() {
               perspectives, and experiences our members bring, as we believe
               that community is built through shared curiosity and connection.
             </p>
+            <br />
           </div>
           <div className="section-col">
             <p className="section-paragraph">
@@ -125,6 +149,7 @@ export default function Landing() {
               student performances, storytelling, and the beauty of Vietnamese
               customs for both our campus and local community.
             </p>
+            <br />
             <p className="section-paragraph">
               Through cultural showcases, community service, fun-filled
               meetings, and heartwarming socials, we strive to create
@@ -170,7 +195,12 @@ export default function Landing() {
             </div>
           </div>
           {/* Pillar 2: Philanthropy */}
-          <div className="pillar-row">
+          <div className="pillar-row" 
+            onClick={(e) => {
+            if (window.matchMedia('(max-width: 768px)').matches) {
+              e.currentTarget.classList.toggle('active');
+            }
+          }}>
             <Image
               src={Philanthrophy}
               alt="Philanthropy"
