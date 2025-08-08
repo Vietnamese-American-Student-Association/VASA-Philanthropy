@@ -2,25 +2,44 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { usePathname } from "next/navigation";
+
+const NAV = [
+  { href: "/", label: "About" },
+  { href: "/officers", label: "Officers" },
+  { href: "/philanthropy", label: "Philanthropy" },
+  { href: "/donation", label: "Donate" },
+];
 
 export default function MobileHeader() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
-  // Close menu on route change and unlock scroll
+  // Close menu on route change
   useEffect(() => {
     setOpen(false);
   }, [pathname]);
 
-  // Lock body scroll when menu is open (prevents iOS URL bar jitter)
+  // Lock body scroll when menu is open (prevents iOS address-bar thrash)
   useEffect(() => {
     const cls = "no-scroll";
     if (open) document.body.classList.add(cls);
     else document.body.classList.remove(cls);
     return () => document.body.classList.remove(cls);
   }, [open]);
+
+  // Allow ESC to close, and close when clicking a link
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
+  const handleLinkClick = useCallback(() => setOpen(false), []);
 
   return (
     <header className="mobile-header">
@@ -48,11 +67,16 @@ export default function MobileHeader() {
         </button>
       </div>
 
-      <nav id="mobile-nav" className={`mobile-dropdown-nav ${open ? "open" : ""}`}>
-        <Link href="/">About</Link>
-        <Link href="/officers">Officers</Link>
-        <Link href="/philanthropy">Philanthropy</Link>
-        <Link href="/donation">Donate</Link>
+      <nav
+        id="mobile-nav"
+        className={`mobile-dropdown-nav ${open ? "open" : ""}`}
+        aria-hidden={!open}
+      >
+        {NAV.map((item) => (
+          <Link key={item.href} href={item.href} onClick={handleLinkClick}>
+            {item.label}
+          </Link>
+        ))}
       </nav>
     </header>
   );

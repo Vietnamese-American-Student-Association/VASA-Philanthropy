@@ -1,12 +1,14 @@
 "use client";
-import React from 'react';
-import { FaInstagram, FaFacebook, FaDiscord } from 'react-icons/fa';
-import Image from 'next/image';
+
+import React from "react";
+import { FaInstagram, FaFacebook } from "react-icons/fa";
+import Image from "next/image";
 
 const MobileFooter: React.FC = () => {
   return (
     <footer className="mobile-footer">
-      <div className='mobile-footer-message'>STAY UPDATED ON OUR SOCIALS!</div>
+      <div className="mobile-footer-message">STAY UPDATED ON OUR SOCIALS!</div>
+
       <div className="mobile-footer-top">
         <Image
           src="/images/VASALogo.png"
@@ -19,9 +21,22 @@ const MobileFooter: React.FC = () => {
           <p className="email">vasaproject407@gmail.com</p>
         </div>
       </div>
+
       <div className="mobile-footer-socials">
-        <a href="https://www.instagram.com/vasaucf?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer"><FaInstagram /></a>
-        <a href="https://www.facebook.com/vasa.ucf/" target="_blank" rel="noopener noreferrer"><FaFacebook /></a>
+        <a
+          href="https://www.instagram.com/vasaucf?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <FaInstagram />
+        </a>
+        <a
+          href="https://www.facebook.com/vasa.ucf/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <FaFacebook />
+        </a>
       </div>
     </footer>
   );
