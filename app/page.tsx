@@ -16,32 +16,22 @@ import Cultural from "../public/images/cultural.png";
 import Philanthrophy from "../public/images/philanthropy.png";
 import Media from "../public/images/media.png";
 import Decorations from "../public/images/decorations.png";
+import WalkingBo from "../public/images/WalkingBo2.gif"; // exact case
 
-const RIGHT_GIF = "/images/WalkingBo2.gif"; // exact case
-const LEFT_GIF = "/images/WalkingBo.gif";   // exact case
-const gifWidthRight = 150;
-const gifWidthLeft = 105; // bigger asset
+const gifWidth = 150; // width of your gif in px
 
 function WalkingGif() {
-  const [direction, setDirection] = useState<1 | -1>(1);
+  const [direction, setDirection] = useState(1);
   const [position, setPosition] = useState(0);
-
-  // Preload both GIFs to prevent flashing when swapping
-  useEffect(() => {
-    const img1 = new window.Image();
-    const img2 = new window.Image();
-    img1.src = RIGHT_GIF;
-    img2.src = LEFT_GIF;
-  }, []);
+  const requestRef = useRef<number | null>(null);
 
   useEffect(() => {
-    const speed = 0.7; // px per frame
-    const max = 300;   // track width
-    let raf = 0;
+    setPosition(-1); // Start at left edge of the donation box container
 
     const animate = () => {
       setPosition((prev) => {
-        let next = prev + direction * speed;
+        const max = 350; // Adjust this value to fit the width of your donation box
+        let next = prev + direction * 0.5; // Adjust speed here (0.5px per frame)
         if (next > max) {
           setDirection(-1);
           next = max;
@@ -51,41 +41,26 @@ function WalkingGif() {
         }
         return next;
       });
-      raf = requestAnimationFrame(animate);
+      requestRef.current = requestAnimationFrame(animate);
     };
-
-    raf = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(raf);
+    requestRef.current = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(requestRef.current!);
   }, [direction]);
 
-  const src = direction === 1 ? RIGHT_GIF : LEFT_GIF;
-  const width = direction === 1 ? gifWidthRight : gifWidthLeft;
-
   return (
-    <div
-      style={{
-        width: 300,
-        height: 80,
-        position: "absolute",
-        top: 106,
-        left: "29%",
-        transform: "translateX(-110%)",
-        pointerEvents: "none",
-      }}
-    >
+    <div style={{ width: 350, height: 80, position: "absolute", top: 110, left: "27%", transform: "translateX(-110%)" }}>
       <img
-        src={src}
+        src={WalkingBo.src}
         alt="Walking Bo"
-        onError={(e) =>
-          console.warn("GIF failed to load:", (e.target as HTMLImageElement).src)
-        }
         style={{
           position: "absolute",
           left: position,
           bottom: 0,
-          width,
+          width: gifWidth,
           height: "auto",
           zIndex: 2,
+          transition: "transform 0.2s",
+          pointerEvents: "none",
         }}
       />
     </div>
