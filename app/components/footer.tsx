@@ -17,14 +17,15 @@ const Footer: React.FC = () => {
             <span className="footer-icon"><FaInstagram /></span>
             <span>@VASAUCF</span>
             </a>
-          <div className="footer-social-row icon-text">
+            <a
+            href="https://www.facebook.com/vasa.ucf/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="footer-social-row icon-text"
+            >
             <span className="footer-icon"><FaFacebook /></span>
             <span>VASA UCF</span>
-          </div>
-          <div className="footer-social-row icon-text">
-            <span className="footer-icon"><FaDiscord /></span>
-            <span>VASA UCF</span>
-          </div>
+            </a>
         </div>
         <div className="footer-contact">
           <h2>CONTACT US</h2>

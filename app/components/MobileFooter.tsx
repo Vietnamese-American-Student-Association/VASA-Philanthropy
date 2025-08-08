@@ -21,8 +21,7 @@ const MobileFooter: React.FC = () => {
       </div>
       <div className="mobile-footer-socials">
         <a href="https://www.instagram.com/vasaucf?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer"><FaInstagram /></a>
-        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"><FaFacebook /></a>
-        <a href="https://discord.gg" target="_blank" rel="noopener noreferrer"><FaDiscord /></a>
+        <a href="https://www.facebook.com/vasa.ucf/" target="_blank" rel="noopener noreferrer"><FaFacebook /></a>
       </div>
     </footer>
   );
