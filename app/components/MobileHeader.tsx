@@ -23,7 +23,7 @@ const MobileHeader: React.FC = () => {
       </div>
 
         <nav className={`mobile-dropdown-nav ${open ? 'open' : ''}`}>
-            <Link href="/" onClick={() => setOpen(false)}>ABOUT US</Link>
+            <Link href="/" prefetch={false} onClick={() => setOpen(false)}>ABOUT US</Link>
             <Link href="/officers" onClick={() => setOpen(false)}>OFFICERS</Link>
             <Link href="/philanthropy" onClick={() => setOpen(false)}>PHILANTHROPY</Link>
             <Link href="/donation" onClick={() => setOpen(false)}>DONATE</Link>

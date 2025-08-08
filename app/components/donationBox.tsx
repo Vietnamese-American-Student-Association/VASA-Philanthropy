@@ -10,15 +10,19 @@ export default function DonationBox() {
   const [custom, setCustom] = useState("");
   const router = useRouter();
 
-  const handleDonate = () => {
-    const amount = selected === "custom" ? custom : selected;
-    if (amount && Number(amount) > 0) {
-      router.push(`/donate?amount=${amount}`);
-    }
+  const resolvedAmount = selected === "custom" ? Number(custom || 0) : Number(selected || 0);
+  const canSubmit = resolvedAmount > 0;
+
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
+    if (!canSubmit) return;
+    // Ensure integer cents if you later need it; for now pass a clean number
+    router.push(`/donate?amount=${resolvedAmount}`);
   };
 
   return (
-    <div
+    <form
+      onSubmit={handleSubmit}
       style={{
         marginTop: "5rem",
         background: "#E8EDDF",
@@ -28,12 +32,12 @@ export default function DonationBox() {
         maxWidth: 450,
         width: "100%",
         textAlign: "center",
-        fontFamily: 'Rubik',
+        fontFamily: "Rubik",
       }}
     >
       <h2
         style={{
-          fontFamily: 'Rubik',
+          fontFamily: "Rubik",
           fontWeight: 600,
           marginBottom: "1.5rem",
           color: "#6B4A1B",
@@ -44,10 +48,13 @@ export default function DonationBox() {
       >
         THANK YOU FOR<br />YOUR SUPPORT
       </h2>
+
       <div style={{ display: "flex", flexWrap: "wrap", gap: "1.2rem", marginBottom: "1.2rem" }}>
         {DONATION_AMOUNTS.map((amt) => (
           <button
             key={amt}
+            type="button"
+            aria-pressed={selected === amt}
             onClick={() => {
               if (selected === amt) {
                 setSelected(null);
@@ -57,7 +64,7 @@ export default function DonationBox() {
               }
             }}
             style={{
-              fontFamily: 'Rubik',
+              fontFamily: "Rubik",
               flex: "1 1 40%",
               padding: "1rem 0",
               borderRadius: "8px",
@@ -75,9 +82,10 @@ export default function DonationBox() {
           </button>
         ))}
       </div>
+
       <div
         style={{
-          fontFamily: 'Rubik',
+          fontFamily: "Rubik",
           display: "flex",
           alignItems: "center",
           gap: "0.7rem",
@@ -87,20 +95,37 @@ export default function DonationBox() {
           borderRadius: "8px",
         }}
       >
-        <span style={{ fontFamily: 'Rubik', fontWeight: 700, color: "#6B4A1B", fontSize: "1.2rem" }}>CUSTOM</span>
+        <label
+          htmlFor="donation-custom"
+          style={{ fontFamily: "Rubik", fontWeight: 700, color: "#6B4A1B", fontSize: "1.2rem" }}
+        >
+          CUSTOM
+        </label>
+
         <input
-          type="number"
-          min={1}
+          id="donation-custom"
+          name="donationAmount"             // <-- important for autofill & the warning
+          type="text"                       // text + inputMode avoids weird mobile number issues
+          inputMode="numeric"
+          pattern="[0-9]*"
+          autoComplete="off"
           placeholder="$"
           value={custom}
           onFocus={() => setSelected("custom")}
-          onChange={e => { setCustom(e.target.value); setSelected("custom"); }}
+          onChange={(e) => {
+            const onlyDigits = e.target.value.replace(/[^\d]/g, "");
+            setCustom(onlyDigits);
+            setSelected("custom");
+          }}
+          aria-label="Custom donation amount in dollars"
+          minLength={1}
+          maxLength={6}
           style={{
-            fontFamily: 'Rubik',
+            fontFamily: "Rubik",
             flex: 1,
             padding: "0.7rem",
             borderRadius: "8px",
-            border: selected === "custom" ? "3px solid #F6C452" : "3px solid #F6C452",
+            border: selected === "custom" ? "3px solid #6B4A1B" : "3px solid #F6C452",
             outline: "none",
             fontSize: "1.2rem",
             background: "#fff",
@@ -110,29 +135,27 @@ export default function DonationBox() {
           }}
         />
       </div>
+
       <button
-        onClick={handleDonate}
+        type="submit"
+        disabled={!canSubmit}
         style={{
-          fontFamily: 'Rubik',
+          fontFamily: "Rubik",
           width: "100%",
           padding: "1rem 0",
           borderRadius: "8px",
-          background: "#664C43",
+          background: canSubmit ? "#664C43" : "#8f7a73",
           color: "#fff",
           fontWeight: 700,
           fontSize: "1.3rem",
           border: "none",
-          cursor: "pointer",
+          cursor: canSubmit ? "pointer" : "not-allowed",
           letterSpacing: "1px",
           transition: "background 0.2s",
         }}
-        disabled={
-          (selected === null) ||
-          (selected === "custom" && (!custom || Number(custom) <= 0))
-        }
       >
         DONATE
       </button>
-    </div>
+    </form>
   );
 }

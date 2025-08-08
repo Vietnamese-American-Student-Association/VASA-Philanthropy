@@ -763,7 +763,6 @@ input[type="number"] {
     opacity: 1;
     transform: translateY(0);
   }
-  .landing-donation-overlay{display: none;}
 }
 
 /* 3) Minor nit: this left offset can also cause visual bias */
