@@ -98,10 +98,12 @@ export default function Landing() {
           sizes="100vw"
           priority
         />
-            <div className="landing-donation-overlay" style={{ position: "relative" }}>
-              <WalkingGif />
-              <DonationBox />
-            </div>
+        {!isMobile && (
+          <div className="landing-donation-overlay" style={{ position: "relative" }}>
+            <WalkingGif />
+            <DonationBox />
+          </div>
+        )}
       </div>
       {/* Logo between hero and content */}
       <div className="landing-logo-container">
