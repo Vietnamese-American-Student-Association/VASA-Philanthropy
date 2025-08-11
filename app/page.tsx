@@ -1,9 +1,9 @@
+"use client";
 import Image from "next/image";
+import { useState, useEffect } from "react";
 import Header from "./components/header";
 import MobileHeader from "./components/MobileHeader";
 import DonationBox from "./components/donationBox";
-import WalkingGif from "./components/WalkingGif";
-
 import VASALogo from "../public/images/VASALogo.png";
 import Group_image from "../public/images/group_image1.png";
 import Cultural from "../public/images/cultural.png";
@@ -12,8 +12,23 @@ import Media from "../public/images/media.png";
 import Decorations from "../public/images/decorations.png";
 import MobileFooter from "./components/MobileFooter";
 import Footer from "./components/footer";
+import WalkingGif from "./components/WalkingGif";
 
 export default function Landing() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    // Detect mobile to conditionally load heavy components
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   return (
     <div id="page-container">
       {/* SSR-safe: render both, hide via CSS */}
@@ -28,10 +43,26 @@ export default function Landing() {
           className="landing-bg-image"
           sizes="100vw"
           priority
+          // CRITICAL: Add these props for iOS Safari stability
+          quality={isMobile ? 50 : 80} // Reduce quality on mobile
+          placeholder="blur" // Add blur placeholder if you have blurDataURL
+          // blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQ..." // Add if available
         />
-        {/* Always render; CSS hides on mobile to avoid mount/unmount churn */}
+        
+        {/* Conditional rendering for mobile stability */}
         <div className="landing-donation-overlay" style={{ position: "relative" }}>
-          <WalkingGif />
+          {/* Only show walking GIF on desktop */}
+          {!isMobile && (
+            // <div className="walk-container">
+            //   <img 
+            //     src="../public/images/WalkingBo2.gif" // Ensure correct path
+            //     alt="Walking animation"
+            //     className="walk"
+            //     loading="lazy" // Lazy load non-critical animations
+            //   />
+            // </div>
+            <WalkingGif />
+          )}
           <DonationBox />
         </div>
       </div>
@@ -44,6 +75,9 @@ export default function Landing() {
           width={200}
           height={200}
           className="landing-logo-image"
+          // Add optimization for logo
+          quality={90}
+          placeholder="empty"
         />
       </div>
 
@@ -87,7 +121,7 @@ export default function Landing() {
         </div>
       </div>
 
-      {/* OUR PILLARS Section */}
+      {/* OUR PILLARS Section - Optimized for mobile */}
       <section className="section-bg-top">
         <div className="section-container" style={{ textAlign: "center" }}>
           <h2 className="section-heading" style={{ textAlign: "center", fontSize: "2rem", color: "#6B4A1B" }}>
@@ -98,15 +132,26 @@ export default function Landing() {
         <div className="pillar-fullwidth">
           {/* Cultural */}
           <div className="pillar-row">
-            <Image src={Cultural} alt="Cultural" fill className="pillar-image" style={{ objectFit: "cover" }} />
+            <Image 
+              src={Cultural} 
+              alt="Cultural" 
+              fill 
+              className="pillar-image" 
+              style={{ objectFit: "cover" }}
+              // CRITICAL: Add these for mobile stability
+              sizes="100vw"
+              quality={isMobile ? 40 : 70} // Lower quality on mobile
+              loading="lazy" // Lazy load below-fold images
+              placeholder="empty"
+            />
             <div className="pillar-overlay">
               <span className="pillar-label">CULTURAL</span>
               <span className="pillar-desc">
                 Want to learn more about Vietnamese culture in a fun and creative way? Join us through dancing
-                and storytelling—two traditions that bring Vietnam’s history, values, and spirit to life. Our
+                and storytelling—two traditions that bring Vietnam's history, values, and spirit to life. Our
                 cultural dance team features classic performances like the Fan Dance and Hat Dance, which are
                 not only beautiful to watch but also rich in meaning and tradition. If you're more into acting
-                or writing, you can join our skit team, where you’ll help with scriptwriting and acting out
+                or writing, you can join our skit team, where you'll help with scriptwriting and acting out
                 performances that share cultural stories in an engaging way.
               </span>
             </div>
@@ -114,7 +159,17 @@ export default function Landing() {
 
           {/* Philanthropy */}
           <div className="pillar-row">
-            <Image src={Philanthrophy} alt="Philanthropy" fill className="pillar-image" style={{ objectFit: "cover" }} />
+            <Image 
+              src={Philanthrophy} 
+              alt="Philanthropy" 
+              fill 
+              className="pillar-image" 
+              style={{ objectFit: "cover" }}
+              sizes="100vw"
+              quality={isMobile ? 40 : 70}
+              loading="lazy"
+              placeholder="empty"
+            />
             <div className="pillar-overlay">
               <span className="pillar-label">PHILANTHROPY</span>
               <span className="pillar-desc">
@@ -128,7 +183,17 @@ export default function Landing() {
 
           {/* Media */}
           <div className="pillar-row">
-            <Image src={Media} alt="Media" fill className="pillar-image" style={{ objectFit: "cover" }} />
+            <Image 
+              src={Media} 
+              alt="Media" 
+              fill 
+              className="pillar-image" 
+              style={{ objectFit: "cover" }}
+              sizes="100vw"
+              quality={isMobile ? 40 : 70}
+              loading="lazy"
+              placeholder="empty"
+            />
             <div className="pillar-overlay">
               <span className="pillar-label">MEDIA</span>
               <span className="pillar-desc">
@@ -139,11 +204,21 @@ export default function Landing() {
 
           {/* Decorations */}
           <div className="pillar-row">
-            <Image src={Decorations} alt="Decorations" fill className="pillar-image" style={{ objectFit: "cover" }} />
+            <Image 
+              src={Decorations} 
+              alt="Decorations" 
+              fill 
+              className="pillar-image" 
+              style={{ objectFit: "cover" }}
+              sizes="100vw"
+              quality={isMobile ? 40 : 70}
+              loading="lazy"
+              placeholder="empty"
+            />
             <div className="pillar-overlay">
               <span className="pillar-label">DECORATIONS</span>
               <span className="pillar-desc">
-                The Decoration Committee isn’t just about making things look nice. They play a big role in bringing
+                The Decoration Committee isn't just about making things look nice. They play a big role in bringing
                 each GBM and event to life. From designing unique posters to painting props and creating banners,
                 they work together to make sure everything fits the theme and vibe of the occasion.
               </span>
@@ -155,7 +230,7 @@ export default function Landing() {
       <div className="donation-info">
         <div className="donation-info-inner">
           <div style={{ marginBottom: "3rem" }}>
-            Your donation directly supports UCF VASA’s efforts in the Collective Philanthropy Project. By contributing,
+            Your donation directly supports UCF VASA's efforts in the Collective Philanthropy Project. By contributing,
             you're not only helping deliver medical care to those in need, but also investing in the next generation of
             leaders and changemakers.
           </div>
@@ -164,6 +239,7 @@ export default function Landing() {
           </div>
         </div>
       </div>
+      
       <div className="desktop-only">
         <Footer />
       </div>
