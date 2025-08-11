@@ -1,5 +1,6 @@
 "use client";
-import React from "react";
+
+import React, { Suspense } from "react";
 import Image from "next/image";
 import Header from "../components/header";
 import Footer from "../components/footer";
@@ -14,7 +15,17 @@ const AMOUNTS: number[] = [50, 25, 10, 5];
 const formatUSD = (n: number) =>
   n.toLocaleString("en-US", { style: "currency", currency: "USD" });
 
+/** Outer page: just provides the Suspense boundary */
 export default function DonationPage() {
+  return (
+    <Suspense fallback={<div style={{ height: "50vh" }} />}>
+      <DonationPageInner />
+    </Suspense>
+  );
+}
+
+/** Inner client component that actually uses useSearchParams */
+function DonationPageInner() {
   const isMobile = useIsMobile();
   const searchParams = useSearchParams();
 
