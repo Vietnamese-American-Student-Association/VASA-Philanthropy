@@ -17,9 +17,7 @@ export default function MobileHeader() {
   const pathname = usePathname();
 
   // Close menu on route change
-  useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
+  useEffect(() => { setOpen(false); }, [pathname]);
 
   // Lock body scroll when menu is open (prevents iOS address-bar thrash)
   useEffect(() => {
@@ -29,12 +27,10 @@ export default function MobileHeader() {
     return () => document.body.classList.remove(cls);
   }, [open]);
 
-  // Allow ESC to close, and close when clicking a link
+  // Allow ESC to close
   useEffect(() => {
     if (!open) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
-    };
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setOpen(false); };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
@@ -59,7 +55,7 @@ export default function MobileHeader() {
           className={`menu-btn ${open ? "open" : ""}`}
           aria-expanded={open}
           aria-controls="mobile-nav"
-          onClick={() => setOpen((v) => !v)}
+          onClick={() => setOpen(v => !v)}
         >
           <span className="menu-bar" />
           <span className="menu-bar" />
@@ -72,7 +68,7 @@ export default function MobileHeader() {
         className={`mobile-dropdown-nav ${open ? "open" : ""}`}
         aria-hidden={!open}
       >
-        {NAV.map((item) => (
+        {NAV.map(item => (
           <Link key={item.href} href={item.href} onClick={handleLinkClick}>
             {item.label}
           </Link>
