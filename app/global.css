@@ -338,19 +338,26 @@ input[type="number"] { -moz-appearance:textfield; appearance:textfield; }
 }
 
 /* ===== CRITICAL: Touch device optimizations ===== */
-@media (hover: none) and (pointer: coarse) {
-  /* Disable hover effects on touch devices to prevent memory issues */
-  .pillar-row:hover .pillar-image {
-    filter: brightness(0.85) !important; /* Reset to default on touch devices */
+@media (max-width: 768px) {
+  .pillar-row {
+    cursor: pointer;
   }
   
-  .pillar-row:hover .pillar-label {
-    transform: translateY(0) !important; /* Disable hover transform on touch */
+  /* Default state: descriptions hidden */
+  .pillar-desc {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
   }
   
-  .pillar-row:hover .pillar-desc {
-    opacity: 0 !important; /* Keep descriptions hidden on touch devices */
-    transform: translateY(20px) !important;
+  /* Active state: descriptions shown when pillar has 'active' class */
+  .pillar-row.active .pillar-desc {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+  }
+  
+  .pillar-row.active .pillar-image {
+    filter: brightness(0.5) !important;
   }
 }
 
