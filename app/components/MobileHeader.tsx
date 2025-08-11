@@ -1,44 +1,57 @@
-"use client";
-
-import Image from "next/image";
-import Link from "next/link";
-import { useEffect, useState, useCallback } from "react";
-import { usePathname } from "next/navigation";
-
-const NAV = [
-  { href: "/", label: "About" },
-  { href: "/officers", label: "Officers" },
-  { href: "/philanthropy", label: "Philanthropy" },
-  { href: "/donation", label: "Donate" },
-];
+'use client';
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
 
 export default function MobileHeader() {
-  const [open, setOpen] = useState(false);
-  const pathname = usePathname();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // Close menu on route change
-  useEffect(() => { setOpen(false); }, [pathname]);
+  // Toggle menu function
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
 
-  // Lock body scroll when menu is open (prevents iOS address-bar thrash)
+  // Close menu when clicking outside or on a link
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
+
+  // Close menu on escape key
   useEffect(() => {
-    const cls = "no-scroll";
-    if (open) document.body.classList.add(cls);
-    else document.body.classList.remove(cls);
-    return () => document.body.classList.remove(cls);
-  }, [open]);
+    const handleEscape = (e: { key: string; }) => {
+      if (e.key === 'Escape') {
+        setIsMenuOpen(false);
+      }
+    };
 
-  // Allow ESC to close
+    if (isMenuOpen) {
+      document.addEventListener('keydown', handleEscape);
+      // Prevent body scroll when menu is open
+      document.body.classList.add('no-scroll');
+    } else {
+      document.body.classList.remove('no-scroll');
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+      document.body.classList.remove('no-scroll');
+    };
+  }, [isMenuOpen]);
+
+  // Close menu on window resize (if user rotates device)
   useEffect(() => {
-    if (!open) return;
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setOpen(false); };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [open]);
+    const handleResize = () => {
+      if (window.innerWidth > 768) {
+        setIsMenuOpen(false);
+      }
+    };
 
-  const handleLinkClick = useCallback(() => setOpen(false), []);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   return (
-    <header className="mobile-header">
+    <div className="mobile-header">
       <div className="mobile-header-top">
         <Link href="/" aria-label="VASA home">
           <Image
@@ -50,30 +63,46 @@ export default function MobileHeader() {
             priority
           />
         </Link>
-
-        <button
-          className={`menu-btn ${open ? "open" : ""}`}
-          aria-expanded={open}
-          aria-controls="mobile-nav"
-          onClick={() => setOpen(v => !v)}
+        
+        <button 
+          className={`menu-btn ${isMenuOpen ? 'open' : ''}`}
+          onClick={toggleMenu}
+          aria-label="Toggle navigation menu"
+          aria-expanded={isMenuOpen}
         >
-          <span className="menu-bar" />
-          <span className="menu-bar" />
-          <span className="menu-bar" />
+          <span className="menu-bar"></span>
+          <span className="menu-bar"></span>
+          <span className="menu-bar"></span>
         </button>
       </div>
 
-      <nav
-        id="mobile-nav"
-        className={`mobile-dropdown-nav ${open ? "open" : ""}`}
-        aria-hidden={!open}
+      {/* Dropdown Navigation */}
+      <nav 
+        className={`mobile-dropdown-nav ${isMenuOpen ? 'open' : ''}`}
+        aria-hidden={!isMenuOpen}
       >
-        {NAV.map(item => (
-          <Link key={item.href} href={item.href} onClick={handleLinkClick}>
-            {item.label}
-          </Link>
-        ))}
+        <Link href="/" onClick={closeMenu}>
+          Home
+        </Link>
+        <Link href="/officers" onClick={closeMenu}>
+          Officers
+        </Link>
+        <Link href="/philanthropy" onClick={closeMenu}>
+          Philanthropy
+        </Link>
+        <Link href="/donation" onClick={closeMenu}>
+          Donate
+        </Link>
       </nav>
-    </header>
+
+      {/* Overlay to close menu when clicking outside */}
+      {isMenuOpen && (
+        <div 
+          className="mobile-menu-overlay"
+          onClick={closeMenu}
+          aria-hidden="true"
+        />
+      )}
+    </div>
   );
 }
