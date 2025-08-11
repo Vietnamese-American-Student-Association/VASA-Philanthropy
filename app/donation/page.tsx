@@ -12,8 +12,25 @@ import { useSearchParams } from "next/navigation";
 
 const AMOUNTS: number[] = [50, 25, 10, 5];
 
+// Payment usernames - replace with actual usernames
+const VENMO_USERNAME = "vasaucf";
+const CASHAPP_USERNAME = "vasaucf";
+
 const formatUSD = (n: number) =>
   n.toLocaleString("en-US", { style: "currency", currency: "USD" });
+
+// Generate payment links
+const generateVenmoLink = (amount: number, note: string = "UCF VASA Donation") => {
+  if (amount <= 0) return "#";
+  const encodedNote = encodeURIComponent(note);
+  return `https://venmo.com/${VENMO_USERNAME}?txn=pay&amount=${amount}&note=${encodedNote}`;
+};
+
+const generateCashAppLink = (amount: number, note: string = "UCF VASA Donation") => {
+  if (amount <= 0) return "#";
+  const encodedNote = encodeURIComponent(note);
+  return `https://cash.app/$${CASHAPP_USERNAME}/${amount}?note=${encodedNote}`;
+};
 
 /** Outer page: just provides the Suspense boundary */
 export default function DonationPage() {
@@ -50,6 +67,10 @@ function DonationPageInner() {
   }, [searchParams]);
 
   const amount = selected === "custom" ? Number(customAmount || 0) : selected || 0;
+  
+  // Generate dynamic payment links
+  const venmoLink = generateVenmoLink(amount);
+  const cashAppLink = generateCashAppLink(amount);
 
   return (
     <div className="donation-page">
@@ -75,8 +96,8 @@ function DonationPageInner() {
         <section className="donation-card">
           <h1>THANK YOU FOR YOUR SUPPORT</h1>
           <p className="donation-copy">
-            Your donation directly supports UCF VASA’s efforts in the Collective
-            Philanthropy Project. By contributing, you’re not only helping
+            Your donation directly supports UCF VASA's efforts in the Collective
+            Philanthropy Project. By contributing, you're not only helping
             deliver medical care to those in need, but also investing in the
             next generation of leaders and changemakers.
             <br />
@@ -157,10 +178,24 @@ function DonationPageInner() {
             </div>
 
             <div className="payment-buttons">
-              <a className="pay-btn venmo" href="#" aria-label="Pay with Venmo">
+              <a 
+                className={`pay-btn venmo ${amount <= 0 ? "disabled" : ""}`}
+                href={venmoLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Pay with Venmo"
+                onClick={amount <= 0 ? (e) => e.preventDefault() : undefined}
+              >
                 <span className="brand venmo-word">venmo</span>
               </a>
-              <a className="pay-btn cashapp" href="#" aria-label="Pay with Cash App">
+              <a 
+                className={`pay-btn cashapp ${amount <= 0 ? "disabled" : ""}`}
+                href={cashAppLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Pay with Cash App"
+                onClick={amount <= 0 ? (e) => e.preventDefault() : undefined}
+              >
                 <span className="cash-icon">$</span>
                 <span className="brand">Cash App</span>
               </a>
