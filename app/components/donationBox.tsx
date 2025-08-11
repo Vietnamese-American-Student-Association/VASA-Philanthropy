@@ -3,21 +3,22 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 
-const DONATION_AMOUNTS = [50, 25, 10, 5];
+const DONATION_AMOUNTS = [50, 25, 10, 5] as const;
+const DONATION_ROUTE = "/donation"; // <— make sure this matches your folder (app/donate/page.tsx)
 
 export default function DonationBox() {
   const [selected, setSelected] = useState<number | "custom" | null>(null);
   const [custom, setCustom] = useState("");
   const router = useRouter();
 
-  const resolvedAmount = selected === "custom" ? Number(custom || 0) : Number(selected || 0);
+  const resolvedAmount =
+    selected === "custom" ? Number(custom || 0) : Number(selected || 0);
   const canSubmit = resolvedAmount > 0;
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     if (!canSubmit) return;
-    // Ensure integer cents if you later need it; for now pass a clean number
-    router.push(`/donate?amount=${resolvedAmount}`);
+    router.push(`${DONATION_ROUTE}?amount=${resolvedAmount}`);
   };
 
   return (
@@ -38,43 +39,42 @@ export default function DonationBox() {
       <h2
         style={{
           fontFamily: "Rubik",
-          fontWeight: 600,
-          marginBottom: "1.5rem",
-          color: "#6B4A1B",
-          fontSize: "2.5rem",
+          fontWeight: 800,
+          marginBottom: "1.25rem",
+          color: "#171717",
+          fontSize: "2rem",
           lineHeight: 1.15,
-          whiteSpace: "normal",
+          letterSpacing: ".02em",
         }}
       >
-        THANK YOU FOR<br />YOUR SUPPORT
+        THANK YOU FOR
+        <br />
+        YOUR SUPPORT
       </h2>
 
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "1.2rem", marginBottom: "1.2rem" }}>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "0.9rem", marginBottom: "1rem" }}>
         {DONATION_AMOUNTS.map((amt) => (
           <button
             key={amt}
             type="button"
             aria-pressed={selected === amt}
             onClick={() => {
-              if (selected === amt) {
-                setSelected(null);
-              } else {
+              if (selected === amt) setSelected(null);
+              else {
                 setSelected(amt);
                 setCustom("");
               }
             }}
             style={{
-              fontFamily: "Rubik",
-              flex: "1 1 40%",
-              padding: "1rem 0",
-              borderRadius: "8px",
+              flex: "1 1 45%",
+              padding: "0.9rem 0",
+              borderRadius: "12px",
               border: selected === amt ? "3px solid #6B4A1B" : "3px solid transparent",
-              background: "#F6C452",
-              color: "#6B4A1B",
-              fontWeight: 700,
-              fontSize: "1.3rem",
+              background: "#FFC94B",
+              color: "#1b1b1b",
+              fontWeight: 800,
+              fontSize: "1.15rem",
               cursor: "pointer",
-              transition: "border 0.2s, background 0.2s",
               boxSizing: "border-box",
             }}
           >
@@ -85,27 +85,26 @@ export default function DonationBox() {
 
       <div
         style={{
-          fontFamily: "Rubik",
           display: "flex",
           alignItems: "center",
-          gap: "0.7rem",
-          marginBottom: "0.5rem",
-          padding: "0.7rem",
-          background: "#F6C452",
-          borderRadius: "8px",
+          gap: "0.6rem",
+          marginBottom: "0.75rem",
+          padding: "0.6rem",
+          background: "#FFC94B",
+          borderRadius: "12px",
         }}
       >
         <label
           htmlFor="donation-custom"
-          style={{ fontFamily: "Rubik", fontWeight: 700, color: "#6B4A1B", fontSize: "1.2rem" }}
+          style={{ fontWeight: 800, color: "#1b1b1b", fontSize: "1.05rem" }}
         >
           CUSTOM
         </label>
 
         <input
           id="donation-custom"
-          name="donationAmount"             // <-- important for autofill & the warning
-          type="text"                       // text + inputMode avoids weird mobile number issues
+          name="donationAmount"
+          type="text"
           inputMode="numeric"
           pattern="[0-9]*"
           autoComplete="off"
@@ -121,17 +120,15 @@ export default function DonationBox() {
           minLength={1}
           maxLength={6}
           style={{
-            fontFamily: "Rubik",
             flex: 1,
-            padding: "0.7rem",
-            borderRadius: "8px",
-            border: selected === "custom" ? "3px solid #6B4A1B" : "3px solid #F6C452",
+            padding: "0.6rem",
+            borderRadius: "10px",
+            border: selected === "custom" ? "3px solid #6B4A1B" : "3px solid #FFC94B",
             outline: "none",
-            fontSize: "1.2rem",
+            fontSize: "1.05rem",
             background: "#fff",
-            color: "#6B4A1B",
+            color: "#1b1b1b",
             fontWeight: 700,
-            transition: "border 0.2s",
           }}
         />
       </div>
@@ -140,18 +137,16 @@ export default function DonationBox() {
         type="submit"
         disabled={!canSubmit}
         style={{
-          fontFamily: "Rubik",
           width: "100%",
-          padding: "1rem 0",
-          borderRadius: "8px",
+          padding: "0.9rem 0",
+          borderRadius: "12px",
           background: canSubmit ? "#664C43" : "#8f7a73",
           color: "#fff",
-          fontWeight: 700,
-          fontSize: "1.3rem",
+          fontWeight: 800,
+          fontSize: "1.1rem",
           border: "none",
           cursor: canSubmit ? "pointer" : "not-allowed",
-          letterSpacing: "1px",
-          transition: "background 0.2s",
+          letterSpacing: ".5px",
         }}
       >
         DONATE
