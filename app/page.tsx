@@ -78,7 +78,8 @@ export default function Landing() {
           alt="Group"
           fill
           className="landing-bg-image"
-          style={{ objectFit: "cover", zIndex: -1 }}
+          sizes="100vw"
+          priority
         />
         {!isMobile && <div className="landing-donation-overlay" style={{ position: "relative" }}>
           <WalkingGif />

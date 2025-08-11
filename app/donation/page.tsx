@@ -115,9 +115,8 @@ export default function DonationPage() {
 
                 {/* Payment buttons */}
                 <div className="payment-buttons">
-                    <button className="pay-btn stripe">Stripe</button>
-                    <button className="pay-btn venmo">Venmo</button>
-                    <button className="pay-btn cashapp">Cash&nbsp;App</button>
+                    <a className="pay-btn venmo">Venmo</a>
+                    <a className="pay-btn cashapp">Cash&nbsp;App</a>
                 </div>
           </div>
         </section>
