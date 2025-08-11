@@ -10,6 +10,8 @@ import Cultural from "../public/images/cultural.png";
 import Philanthrophy from "../public/images/philanthropy.png";
 import Media from "../public/images/media.png";
 import Decorations from "../public/images/decorations.png";
+import MobileFooter from "./components/MobileFooter";
+import Footer from "./components/footer";
 
 export default function Landing() {
   return (
@@ -161,6 +163,12 @@ export default function Landing() {
             Every dollar counts and brings us one step closer to our goal. Thank you for being part of something meaningful!
           </div>
         </div>
+      </div>
+      <div className="desktop-only">
+        <Footer />
+      </div>
+      <div className="mobile-only">
+        <MobileFooter />
       </div>
     </div>
   );
