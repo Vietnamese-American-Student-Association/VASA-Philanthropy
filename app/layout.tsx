@@ -16,6 +16,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "VASA Philanthropy",
   description: "Philanthropic organization dedicated to making a difference.",
+  icons: {
+    icon: "/images/headerlogo.png", // favicon
+  },
 };
 
 export const viewport: Viewport = {
