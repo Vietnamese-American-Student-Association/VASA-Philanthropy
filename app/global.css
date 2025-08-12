@@ -140,8 +140,7 @@ footer {
 .mobile-dropdown-nav a{ color:#fff; font-size:1.125rem; text-transform:uppercase; font-weight:600; text-decoration:none; padding:.5rem 0; border-bottom:1px solid rgba(255,255,255,.1); transition:color .2s ease; }
 .mobile-dropdown-nav a:last-child{ border-bottom:none; }
 .mobile-dropdown-nav a:hover{ color:#F3C654; }
-.mobile-menu-overlay{ position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:1099; opacity:0; animation:fadeIn .2s ease forwards; }
-@keyframes fadeIn{ to{ opacity:1; } }
+.mobile-menu-overlay{ position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:1099; opacity:0; transition:opacity .2s ease forwards; }
 
 /* Walking GIF (disabled on mobile) */
 .walk-container{ width:350px; height:80px; position:absolute; top:110px; left:27%; transform:translateX(-110%); pointer-events:none; overflow:hidden; }
