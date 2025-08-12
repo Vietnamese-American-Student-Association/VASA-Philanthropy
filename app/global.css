@@ -1,32 +1,65 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap');
 
 :root { --background:#ffffff; --foreground:#171717; }
-@media (prefers-color-scheme: dark) { :root { --background:#0a0a0a; --foreground:#ededed; } }
-
-* , *::before , *::after { box-sizing:border-box; }
-* { margin:0; }
-html, body { height:100%; padding:0; }
-html, body { overflow-x:hidden; }
-
-body{
-  min-height:100vh; min-height:100svh; display:flex; flex-direction:column; color:#171717; background:#E8EDDF;
-  font-family:'Rubik', sans-serif; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+@media (prefers-color-scheme: dark) {
+  :root { --background:#0a0a0a; --foreground:#ededed; }
 }
 
-a{ color:inherit; text-decoration:none; }
-.no-scroll{ overflow:hidden; height:100vh; height:100svh; }
+/* ===== Reset ===== */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+* { margin: 0; }
+html, body { height: 100%; padding: 0; }
+/* Safari-safe: avoid 'clip' on older WebKit */
+html, body { overflow-x: hidden; }
 
-#page-container{ display:flex; flex-direction:column; min-height:100vh; min-height:100svh; }
-.content-wrapper{ flex:1; max-width:1200px; margin:0 auto; padding:0 2vw; width:100%; contain:layout style; padding-top:4em; }
-main{ flex:1; display:flex; flex-direction:column; max-width:1200px; margin:7vw auto; padding:0 2vw; width:100%; }
+body {
+  min-height: 100vh; /* Fallback for better iOS compatibility */
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  color: #171717;
+  background: #E8EDDF;
+  font-family: 'Rubik', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
-/* Desktop header */
-header{ background:#F6C452; color:#171717; padding:2vw 0; display:flex; align-items:center; justify-content:center; position:fixed; top:0; width:100%; z-index:1000; contain:paint; }
-header nav{ display:flex; gap:0.5vw; align-items:center; }
-header nav a:hover{ text-decoration:underline; }
+a { color: inherit; text-decoration: none; }
+.no-scroll { overflow: hidden; height: 100vh; height: 100svh; }
 
-/* Footer */
-footer{ background:#F6C452; color:#171717; padding:2vw 1vw; text-align:center; width:100%; flex-shrink:0; margin-top:auto; }
+/* ===== Layout shells ===== */
+#page-container { display:flex; flex-direction:column; min-height:100vh; min-height:100svh; }
+.content-wrapper {
+  flex:1; max-width:1200px; margin:0 auto; padding:0 2vw; width:100%; 
+  contain:layout style; padding-top: 4em;/* Critical: Isolate layout calculations for iOS Safari */
+}
+main {
+  flex:1; display:flex; flex-direction:column; max-width:1200px; margin:7vw auto; padding:0 2vw; width:100%;
+}
+
+/* ===== Desktop header (fixed) ===== */
+header {
+  background:#F6C452; color:#171717; padding:2vw 0;
+  display:flex; align-items:center; justify-content:center;
+  position:fixed; top:0; width:100%; z-index:1000; 
+  contain:paint; /* Optimize rendering */
+}
+header h1 {
+  color:#171717; font-size:2vw; font-weight:700; white-space:nowrap; letter-spacing:-0.01vw; margin-right:7vw; line-height:1.2;
+}
+header nav { display:flex; gap:0.5vw; align-items:center; }
+header nav a { color:#171717; font-size:1vw; font-weight:400; line-height:1.5; text-decoration:none; transition:text-decoration .2s; }
+header nav a:hover { text-decoration:underline; }
+header nav span { margin:0.25vw; color:#171717; }
+
+/* ===== Footer (desktop) ===== */
+footer {
+  background:#F6C452; color:#171717; padding:2vw 1vw; text-align:center; width:100%;
+  flex-shrink:0; margin-top:auto;
+}
+
 
 /* Landing hero */
 .landing-hero{ position:relative; width:100%; min-height:85vh; contain:paint layout; }
@@ -125,3 +158,49 @@ img{ height:auto; max-width:100%; display:block; }
 
 /* Simple button */
 .btn-primary{ display:inline-block; background:#F6C452; color:#171717; padding:.6rem 1rem; border-radius:10px; font-weight:800; text-decoration:none; }
+
+.mobile-officer-grid { display:grid; gap:1.5rem; margin-bottom:2vw; }
+.officer-grid {
+  display:grid; grid-template-columns:repeat(1,1fr); gap:1.5rem; margin-bottom:2vw;
+  margin-left:auto; margin-right:auto; max-width:1200px; justify-items:center; justify-content:center; box-sizing:border-box;
+}
+@media (min-width:640px){ .officer-grid{ grid-template-columns:repeat(2,1fr);} }
+@media (min-width:768px){ .officer-grid{ grid-template-columns:repeat(3,1fr);} }
+@media (min-width:1024px){ .officer-grid{ grid-template-columns:repeat(3,1fr);} }
+
+.officer-card { background:#fff; padding:1rem; border-radius:12px; text-align:center; box-shadow:0 0 10px rgba(0,0,0,0.05); margin:0 auto; }
+.officer-card img { 
+  padding-bottom:1em; width:100%; height:auto; object-fit:cover; border-radius:10px;
+  /* CRITICAL: Add explicit dimensions to prevent layout thrashing on iOS */
+  max-width: 400px;
+  max-height: 400px;
+}
+.officer-card h3 { color:#171717; font-weight:700; font-size:clamp(16px,1.125vw,22px); margin-bottom:0.25vw; }
+.officer-card p { color:#555; font-size:clamp(14px,1vw,18px); }
+
+/* ===== Toggle header ===== */
+.board-header {
+  font-family:'Rubik', sans-serif;
+  font-size:clamp(18px,1.75vw,28px);
+  display:flex; justify-content:space-between; align-items:center;
+  margin:3vw auto; max-width:1200px; padding-left:2.37vw; padding-right:2vw;
+}
+.board-toggle-container { display:flex; }
+.board-toggle-btn {
+  padding:0.75vw 1.5vw; border-radius:0.375rem; font-weight:700;
+  background:transparent; color:#171717; margin-right:.65vw; transition:background .2s,color .2s;
+  border:4px solid #F6C452; cursor:pointer;
+}
+.board-toggle-btn.active { background:#F6C452; color:#171717; }
+
+/* ===== Footer content ===== */
+.icon-text { display:flex; align-items:center; gap:1vw; }
+.footer-content {
+  display:flex; justify-content:center; align-items:flex-start; gap:6vw; max-width:1200px; margin:0 auto; padding:2vw 0;
+}
+.footer-socials, .footer-contact { flex:1 1 0; min-width:220px; text-align:left; }
+.footer-socials h2, .footer-contact h2 { font-weight:700; font-size:2vw; margin-bottom:1vw; }
+.footer-email { font-size:1.2vw; margin-bottom:1vw; }
+.vasa-logo { width:6vw; height:auto; margin-top:1vw; }
+.footer-icon { display:flex; align-items:center; font-size:2vw; }
+.footer-social-row { margin-bottom:1.5vw; }
