@@ -36,7 +36,7 @@ export default function Landing() {
       <div className="mobile-only"><MobileHeader /></div>
 
       <div className="landing-hero">
-        <Image
+        {/* <Image
           src={Group_image}
           alt="Group"
           fill
@@ -47,7 +47,7 @@ export default function Landing() {
           quality={isMobile ? 50 : 80} // Reduce quality on mobile
           placeholder="blur" // Add blur placeholder if you have blurDataURL
           // blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQ..." // Add if available
-        />
+        /> */}
         
         {/* Conditional rendering for mobile stability */}
         <div className="landing-donation-overlay" style={{ position: "relative" }}>
