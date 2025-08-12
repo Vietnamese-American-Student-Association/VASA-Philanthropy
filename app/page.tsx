@@ -43,11 +43,9 @@ export default function Landing() {
           className="landing-bg-image"
           sizes="100vw"
           priority
-          // CRITICAL: Add these props for iOS Safari stability
-          quality={isMobile ? 50 : 80} // Reduce quality on mobile
-          placeholder="blur" // Add blur placeholder if you have blurDataURL
           // blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQ..." // Add if available
         />
+        <div className="landing-dark-overlay" aria-hidden="true" />
         
         {/* Conditional rendering for mobile stability */}
         <div className="landing-donation-overlay" style={{ position: "relative" }}>
