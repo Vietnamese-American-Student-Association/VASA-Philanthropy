@@ -1,6 +1,6 @@
 "use client";
+
 import Image from "next/image";
-import { useState, useEffect } from "react";
 import Header from "./components/header";
 import MobileHeader from "./components/MobileHeader";
 import DonationBox from "./components/donationBox";
@@ -15,27 +15,25 @@ import Footer from "./components/footer";
 import WalkingGif from "./components/WalkingGif";
 
 export default function Landing() {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    // Detect mobile to conditionally load heavy components
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-    
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
   return (
     <div id="page-container">
-      {/* SSR-safe: render both, hide via CSS */}
+      {/* Render both headers; CSS decides visibility (prevents hydration flicker) */}
       <div className="desktop-only"><Header /></div>
       <div className="mobile-only"><MobileHeader /></div>
 
-      <div className="landing-hero">
+      {/* HERO: stable height box + Image fill = no reflow on iOS */}
+      <section
+        className="landing-hero"
+        style={{
+          position: "relative",
+          width: "100%",
+          /* fixed, predictable box so 'fill' doesn't cause layout thrash */
+          minHeight: "85vh",
+          /* strong guard for iOS */
+          maxHeight: "85vh",
+          overflow: "hidden",
+        }}
+      >
         <Image
           src={Group_image}
           alt="Group"
@@ -43,37 +41,62 @@ export default function Landing() {
           className="landing-bg-image"
           sizes="100vw"
           priority
-          // blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQ..." // Add if available
+          placeholder="blur"
+          /* avoid inline objectFit mutations; keep it simple for iOS */
+          style={{ objectFit: "cover", zIndex: 0 }}
         />
         <div className="landing-dark-overlay" aria-hidden="true" />
-        
-        {/* Conditional rendering for mobile stability */}
-        <div className="landing-donation-overlay" style={{ position: "relative" }}>
-          {/* Only show walking GIF on desktop */}
-          {!isMobile && (
-            <>
-              <DonationBox />
-              <WalkingGif />
-            </>
-          )}
-        </div>
-      </div>
 
-      {/* Logo between hero and content */}
-      <div className="landing-logo-container">
+        {/* No JS conditionals for mobile—CSS controls visibility */}
+        <div
+          className="landing-donation-overlay desktop-only"
+          style={{
+            position: "absolute",
+            inset: 0,
+            display: "flex",
+            alignItems: "flex-start",
+            justifyContent: "flex-start",
+            padding: "7vw",
+            zIndex: 1,
+            pointerEvents: "none", // prevent overlay from trapping touch on iOS
+          }}
+        >
+          <div style={{ pointerEvents: "auto" }}>
+            <DonationBox />
+          </div>
+          {/* Keep the GIF off mobile via CSS; desktop is fine */}
+          <WalkingGif />
+        </div>
+      </section>
+
+      {/* LOGO between hero and content — static dimensions, no layout pop */}
+      <div
+        className="landing-logo-container"
+        style={{
+          display: "flex",
+          justifyContent: "flex-end",
+          alignItems: "center",
+          background: "transparent",
+          marginTop: "-100px",
+          marginBottom: "2rem",
+          marginRight: "2rem",
+          position: "relative",
+          zIndex: 2,
+        }}
+      >
         <Image
           src={VASALogo}
           alt="VASA Logo"
           width={200}
           height={200}
           className="landing-logo-image"
-          // Add optimization for logo
           quality={90}
           placeholder="empty"
+          priority={false}
         />
       </div>
 
-      {/* WHAT IS VASA Section */}
+      {/* WHAT IS VASA */}
       <div className="section-container">
         <h2 className="section-heading">WHAT IS VASA</h2>
         <div className="section-flex">
@@ -92,7 +115,7 @@ export default function Landing() {
               through shared curiosity and connection.
             </p>
           </div>
-          <br/>
+          <br />
           <div className="section-col">
             <p className="section-paragraph">
               We proudly showcase our heritage through cornerstone cultural events like our annual
@@ -113,131 +136,126 @@ export default function Landing() {
         </div>
       </div>
 
-      {/* OUR PILLARS Section - Optimized for mobile */}
+      {/* PILLARS — stable full-bleed rows; no runtime checks; all lazy images */}
       <section className="section-bg-top">
         <div className="section-container" style={{ textAlign: "center" }}>
-          <h2 className="section-heading" style={{ textAlign: "center", fontSize: "2rem", color: "#6B4A1B" }}>
+          <h2
+            className="section-heading"
+            style={{ textAlign: "center", fontSize: "2rem", color: "#6B4A1B" }}
+          >
             OUR PILLARS
           </h2>
         </div>
 
         <div className="pillar-fullwidth">
           {/* Cultural */}
-          <div className="pillar-row">
-            <Image 
-              src={Cultural} 
-              alt="Cultural" 
-              fill 
-              className="pillar-image" 
-              style={{ objectFit: "cover" }}
-              // CRITICAL: Add these for mobile stability
+          <div className="pillar-row" style={{ position: "relative", height: 350 }}>
+            <Image
+              src={Cultural}
+              alt="Cultural"
+              fill
+              className="pillar-image"
               sizes="100vw"
-              quality={isMobile ? 40 : 70} // Lower quality on mobile
-              loading="lazy" // Lazy load below-fold images
-              placeholder="empty"
+              placeholder="blur"
+              loading="lazy"
+              quality={70}
+              style={{ objectFit: "cover" }}
             />
             <div className="pillar-overlay">
               <span className="pillar-label">CULTURAL</span>
               <span className="pillar-desc">
                 Want to learn more about Vietnamese culture in a fun and creative way? Join us through dancing
                 and storytelling—two traditions that bring Vietnam's history, values, and spirit to life. Our
-                cultural dance team features classic performances like the Fan Dance and Hat Dance, which are
-                not only beautiful to watch but also rich in meaning and tradition. If you're more into acting
-                or writing, you can join our skit team, where you'll help with scriptwriting and acting out
-                performances that share cultural stories in an engaging way.
+                cultural dance team features classic performances like the Fan Dance and Hat Dance. If you’re
+                into acting or writing, join our skit team to help script and perform engaging cultural stories.
               </span>
             </div>
           </div>
 
           {/* Philanthropy */}
-          <div className="pillar-row">
-            <Image 
-              src={Philanthrophy} 
-              alt="Philanthropy" 
-              fill 
-              className="pillar-image" 
-              style={{ objectFit: "cover" }}
+          <div className="pillar-row" style={{ position: "relative", height: 350 }}>
+            <Image
+              src={Philanthrophy}
+              alt="Philanthropy"
+              fill
+              className="pillar-image"
               sizes="100vw"
-              quality={isMobile ? 40 : 70}
+              placeholder="blur"
               loading="lazy"
-              placeholder="empty"
+              quality={70}
+              style={{ objectFit: "cover" }}
             />
             <div className="pillar-overlay">
               <span className="pillar-label">PHILANTHROPY</span>
               <span className="pillar-desc">
-                Every year, VASA joins forces with other UNAVSA-affiliated schools through the Collective
-                Philanthropy Project (CPP) to raise funds for a shared cause. To support this amazing cause,
-                we host a variety of fun and meaningful fundraising events throughout the year—including
-                Splatter Splash, Ham Chơi, and Care to Dare. Come out, get involved, and help make a difference!
+                Each year we join UNAVSA’s Collective Philanthropy Project (CPP) to fund a shared cause—through
+                events like Splatter Splash, Ham Chơi, and Care to Dare. Come out, get involved, and help make a
+                difference!
               </span>
             </div>
           </div>
 
           {/* Media */}
-          <div className="pillar-row">
-            <Image 
-              src={Media} 
-              alt="Media" 
-              fill 
-              className="pillar-image" 
-              style={{ objectFit: "cover" }}
+          <div className="pillar-row" style={{ position: "relative", height: 350 }}>
+            <Image
+              src={Media}
+              alt="Media"
+              fill
+              className="pillar-image"
               sizes="100vw"
-              quality={isMobile ? 40 : 70}
+              placeholder="blur"
               loading="lazy"
-              placeholder="empty"
+              quality={70}
+              style={{ objectFit: "cover" }}
             />
             <div className="pillar-overlay">
               <span className="pillar-label">MEDIA</span>
               <span className="pillar-desc">
-                The Media Committee uses their photography and videography skills to help capture the heart of our events.
+                Our Media Committee captures the heart of our events through photography and videography.
               </span>
             </div>
           </div>
 
           {/* Decorations */}
-          <div className="pillar-row">
-            <Image 
-              src={Decorations} 
-              alt="Decorations" 
-              fill 
-              className="pillar-image" 
-              style={{ objectFit: "cover" }}
+          <div className="pillar-row" style={{ position: "relative", height: 350 }}>
+            <Image
+              src={Decorations}
+              alt="Decorations"
+              fill
+              className="pillar-image"
               sizes="100vw"
-              quality={isMobile ? 40 : 70}
+              placeholder="blur"
               loading="lazy"
-              placeholder="empty"
+              quality={70}
+              style={{ objectFit: "cover" }}
             />
             <div className="pillar-overlay">
               <span className="pillar-label">DECORATIONS</span>
               <span className="pillar-desc">
-                The Decoration Committee isn't just about making things look nice. They play a big role in bringing
-                each GBM and event to life. From designing unique posters to painting props and creating banners,
-                they work together to make sure everything fits the theme and vibe of the occasion.
+                Decorations brings every GBM and event to life—from posters and props to banners that match each
+                theme and vibe.
               </span>
             </div>
           </div>
         </div>
       </section>
 
-      <div className="donation-info">
+      {/* DONATION BLURB */}
+      <section className="donation-info">
         <div className="donation-info-inner">
           <div style={{ marginBottom: "3rem" }}>
-            Your donation directly supports UCF VASA's efforts in the Collective Philanthropy Project. By contributing,
-            you're not only helping deliver medical care to those in need, but also investing in the next generation of
-            leaders and changemakers.
+            Your donation directly supports UCF VASA’s efforts in the Collective Philanthropy Project.
+            You’re helping deliver medical care to those in need and investing in future leaders.
           </div>
           <div>
-            Every dollar counts and brings us one step closer to our goal. Thank you for being part of something meaningful!
+            Every dollar counts—thanks for being part of something meaningful!
           </div>
         </div>
-      </div>
-      
-      <div className="desktop-only">
-        <Footer />
-      </div>
-      <div className="mobile-only">
-        <MobileFooter />
-      </div>
+      </section>
+
+      {/* Render both footers; CSS chooses one */}
+      <div className="desktop-only"><Footer /></div>
+      <div className="mobile-only"><MobileFooter /></div>
     </div>
   );
 }
