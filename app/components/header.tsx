@@ -8,8 +8,8 @@ const Header: React.FC = () => {
       <nav aria-label="Primary">
         <Link href="/">ABOUT US</Link>
         <span> | </span>
-        <Link href="/officers">OFFICERS</Link>
-        <span> | </span>
+        {/* <Link href="/officers">OFFICERS</Link>
+        <span> | </span> */}
         <Link href="/philanthropy">PHILANTHROPY</Link>
         <span> | </span>
         <Link href="/donation">DONATE</Link>
