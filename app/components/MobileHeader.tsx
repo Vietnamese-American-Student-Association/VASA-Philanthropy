@@ -84,9 +84,9 @@ export default function MobileHeader() {
         <Link href="/" onClick={closeMenu}>
           Home
         </Link>
-        {/* <Link href="/officers" onClick={closeMenu}>
+        <Link href="/officers" onClick={closeMenu}>
           Officers
-        </Link> */}
+        </Link>
         <Link href="/philanthropy" onClick={closeMenu}>
           Philanthropy
         </Link>
