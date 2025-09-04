@@ -19,7 +19,7 @@ const generalBoard: Officer[] = [
   { name: 'Julian Libutan', position: 'Public Relations Chair', image: '/images/julian.png' },
   { name: 'Vinh Nguyen-Luu', position: 'Public Relations Chair', image: '/images/vinh.jpg' },
   { name: 'Aileena Nguyen', position: 'Cultural Chair', image: '/images/aileena.png' },
-  { name: 'Anna Nguyen', position: 'Cultural Chair', image: '/images/anna.jpg' },
+  { name: 'Anna Nguyen', position: 'Cultural Chair', image: '/images/anna.png' },
   { name: 'Tristan Nguyen', position: 'Media Chair', image: '/images/tristan.png' },
   { name: 'My-Linh Eberhard', position: 'Media Chair', image: '/images/mylinh.png' },
   { name: 'Devin Chin', position: 'Media Chair', image: '/images/devin.png' },
